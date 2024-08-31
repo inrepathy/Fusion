@@ -149,10 +149,6 @@ void CMenu::MenuAimbot()
 				FToggle("Always melee", Vars::CritHack::AlwaysMelee);
 				FToggle("No spread", Vars::Aimbot::General::NoSpread, FToggle_Middle);
 
-				// New AutoUber toggles and slider
-				//oggle("Enable AutoUber", Vars::AutoUber::EnableAutoUber);
-				//lider("Health Threshold", Vars::AutoUber::HealthThreshold, 0.0f, 100.0f, 1.0f, "%.0f%%", FSlider_Clamp);
-
 			} EndSection();
 			if (Vars::Debug::Info.Value)
 			{
@@ -971,11 +967,11 @@ void CMenu::MenuMisc()
 			FToggle("Backpack expander", Vars::Misc::Automation::BackpackExpander);
 		} EndSection();
 
-		if (Section("AutoUber"))
-		{
-			FToggle("Enable AutoUber", Vars::AutoUber::AutoUberEnabled); 
-			FSlider("AutoUber Interval (ms)", Vars::AutoUber::AutoUberIntervalMs, 1.0f, 50.0f); 
-		} EndSection();
+		//if (Section("AutoUber"))
+		//{
+		//	FToggle("Enable AutoUber", Vars::AutoUber::AutoUberEnabled); 
+		//	FSlider("AutoUber Interval (ms)", Vars::AutoUber::AutoUberIntervalMs, 1.0f, 50.0f); 
+	//	} EndSection();
 		if (Section("Sound"))
 		{
 			FDropdown("Block", Vars::Misc::Sound::Block, { "Footsteps", "Noisemaker", "Frying Pan" }, {}, FDropdown_Multi);
