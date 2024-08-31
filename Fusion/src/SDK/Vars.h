@@ -172,7 +172,7 @@ namespace Vars
 	NAMESPACE_END(CritHack)
 
 			NAMESPACE_BEGIN(AutoUber)
-			CVar(AutoUberEnabled, true)               
+			CVar(AutoUberEnabled, false)               
 			CVar(AutoUberIntervalMs, 12.0f)           
 			//CVar(UberSelfEnabled, false)              
 		//	CVar(ApplyToTeammatesOnly, true)          
