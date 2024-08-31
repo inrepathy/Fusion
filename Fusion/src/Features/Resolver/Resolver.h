@@ -44,8 +44,8 @@ public:
 	void Aimbot(CTFPlayer* pEntity, const bool bHeadshot);
 	void FrameStageNotify(CTFPlayer* pLocal);
 	void CreateMove();
-	void FXFireBullet(int iIndex, const Vec3 vAngles);
-	void OnPlayerHurt(IGameEvent* pEvent);
+	void FXFireBullet();
+// void OnPlayerHurt(IGameEvent* pEvent);
 
 	std::unordered_map<uint32_t, std::pair<int, int>> mResolverMode;
 };
