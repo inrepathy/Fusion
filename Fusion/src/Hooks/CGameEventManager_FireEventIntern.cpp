@@ -28,7 +28,7 @@ MAKE_HOOK(CGameEventManager_FireEventIntern, S::CGameEventManager_FireEventInter
 	switch (uHash)
 	{
 	case FNV1A::HashConst("player_hurt"):
-		F::Resolver.OnPlayerHurt(pEvent);
+	//	F::Resolver.OnPlayerHurt(pEvent);
 		F::CheaterDetection.ReportDamage(pEvent);
 		break;
 	case FNV1A::HashConst("player_spawn"):
