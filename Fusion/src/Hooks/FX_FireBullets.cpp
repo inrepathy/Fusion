@@ -16,7 +16,7 @@ MAKE_HOOK(FX_FireBullets, S::FX_FireBullets(), void, __cdecl,
 	if (iPlayer != I::EngineClient->GetLocalPlayer())
 	{
 		F::Backtrack.ReportShot(iPlayer);
-		F::Resolver.FXFireBullet(iPlayer, vecAngles);
+	//	F::Resolver.FXFireBullet(iPlayer, vecAngles);
 	}
 
 	if (dwRetAddr != dwDesired)
