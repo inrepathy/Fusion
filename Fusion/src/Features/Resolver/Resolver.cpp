@@ -257,10 +257,14 @@ void PResolver::CreateMove()
 
     if (pWaiting.second.first && pWaiting.second.first->IsAlive())
     {
+        FakeAngles.emplace_back(pWaiting.second.first->EyeAngles());
+
         pWaiting.second.first->m_angEyeAnglesX() = pWaiting.second.second ? 89.f : -89.f;
         pWaiting.second.first->m_angEyeAnglesY() = (pWaiting.second.first->m_angEyeAnglesY() + (pWaiting.second.second ? 180.f : 0.f));
     }
 }
+
+
 
 void PResolver::FXFireBullet()
 {
