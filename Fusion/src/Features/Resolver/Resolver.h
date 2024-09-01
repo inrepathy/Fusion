@@ -39,6 +39,7 @@ class PResolver
 	std::unordered_map<IClientEntity*, Vec3> mSniperDots;
 	std::unordered_map<CTFPlayer*, ResolveData> mResolverData;
 	std::pair<int, std::pair<CTFPlayer*, bool>> pWaiting = {0, {nullptr, false}};
+	std::vector<Vector> FakeAngles;
 
 public:
 	void Aimbot(CTFPlayer* pEntity, const bool bHeadshot);
