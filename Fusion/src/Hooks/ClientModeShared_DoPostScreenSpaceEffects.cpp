@@ -6,11 +6,11 @@
 #include "../Features/Visuals/Visuals.h"
 
 MAKE_HOOK(ClientModeShared_DoPostScreenSpaceEffects, U::Memory.GetVFunc(I::ClientModeShared, 39), bool, __fastcall,
-	void* rcx, const CViewSetup* pSetup)
+	void* ecx, const CViewSetup* pSetup)
 {
 	F::Chams.mEntities.clear();
 	if (I::EngineVGui->IsGameUIVisible() || Vars::Visuals::UI::CleanScreenshots.Value && I::EngineClient->IsTakingScreenshot())
-		return CALL_ORIGINAL(rcx, pSetup);
+		return CALL_ORIGINAL(ecx, pSetup);
 
 	static std::once_flag onceFlag;
 	std::call_once(onceFlag, []
@@ -35,5 +35,5 @@ MAKE_HOOK(ClientModeShared_DoPostScreenSpaceEffects, U::Memory.GetVFunc(I::Clien
 			F::Visuals.ProjectileTrace(pLocal, pWeapon);
 	}
 
-	return CALL_ORIGINAL(rcx, pSetup);
+	return CALL_ORIGINAL(ecx, pSetup);
 }

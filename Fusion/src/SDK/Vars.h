@@ -420,7 +420,6 @@ namespace Vars
 			CVar(MedigunChargeEffect, 0, VISUAL)
 			CVar(RocketTrailEffect, 0, VISUAL)
 			CVar(RainbowFootstepEffect, false, VISUAL)
-			CVar(RainbowKillstreakSheen, false, VISUAL)
 		SUBNAMESPACE_END(Particle)
 
 		SUBNAMESPACE_BEGIN(Removals)

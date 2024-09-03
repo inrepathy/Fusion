@@ -46,9 +46,9 @@ void Paint()
 }
 
 MAKE_HOOK(EngineVGui_Paint, U::Memory.GetVFunc(I::EngineVGui, 14), void, __fastcall,
-	void* rcx, int iMode)
+	void* ecx, int iMode)
 {
-	CALL_ORIGINAL(rcx, iMode);
+	CALL_ORIGINAL(ecx, iMode);
 
 	if (iMode & PAINT_UIPANELS)
 		Paint();

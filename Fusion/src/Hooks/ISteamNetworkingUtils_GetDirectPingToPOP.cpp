@@ -90,9 +90,9 @@ unsigned int GetDatacenter(FNV1A_t uHash)
 }
 
 MAKE_HOOK(ISteamNetworkingUtils_GetDirectPingToPOP, U::Memory.GetVFunc(I::SteamNetworkingUtils, 9), int, __fastcall,
-	void* rcx, SteamNetworkingPOPID popID)
+	void* ecx, SteamNetworkingPOPID popID)
 {
-	int iOriginal = CALL_ORIGINAL(rcx, popID);
+	int iOriginal = CALL_ORIGINAL(ecx, popID);
 	if (!Vars::Misc::Queueing::ForceRegions.Value)
 		return iOriginal;
 

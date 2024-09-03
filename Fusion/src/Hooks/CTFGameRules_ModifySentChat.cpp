@@ -9,11 +9,11 @@ struct s_CTFGameRules
 };
 
 MAKE_HOOK(CTFGameRules_ModifySentChat, S::CTFGameRules_ModifySentChat(), void, __fastcall,
-	void* rcx, char* pBuf, int iBufSize)
+	void* ecx, char* pBuf, int iBufSize)
 {
 	if (Vars::Misc::MedievalChat.Value > 0)
 	{
-		if (const auto pGameRules = static_cast<s_CTFGameRules*>(rcx))
+		if (const auto pGameRules = static_cast<s_CTFGameRules*>(ecx))
 		{
 			ConVar* tf_medieval_autorp = I::CVar->FindVar("tf_medieval_autorp");
 			ConVar* english = I::CVar->FindVar("english");
@@ -28,7 +28,7 @@ MAKE_HOOK(CTFGameRules_ModifySentChat, S::CTFGameRules_ModifySentChat(), void, _
 				tf_medieval_autorp->SetValue(forceMedieval);
 				english->SetValue(forceMedieval);
 
-				CALL_ORIGINAL(rcx, pBuf, iBufSize);
+				CALL_ORIGINAL(ecx, pBuf, iBufSize);
 				pGameRules->m_bPlayingMedieval = bOriginalPlayingMedieval;
 				tf_medieval_autorp->SetValue(bOriginalAutoRP);
 				english->SetValue(bOriginalEnglish);
@@ -37,5 +37,5 @@ MAKE_HOOK(CTFGameRules_ModifySentChat, S::CTFGameRules_ModifySentChat(), void, _
 		}
 	}
 
-	CALL_ORIGINAL(rcx, pBuf, iBufSize);
+	CALL_ORIGINAL(ecx, pBuf, iBufSize);
 }

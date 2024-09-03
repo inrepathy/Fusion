@@ -18,6 +18,8 @@ void CESP::Run(CTFPlayer* pLocal)
 
 bool CESP::GetDrawBounds(CBaseEntity* pEntity, int& x, int& y, int& w, int& h)
 {
+	Vec3 vMins = pEntity->m_vecMins(), vMaxs = pEntity->m_vecMaxs();
+
 	auto& transform = const_cast<matrix3x4&>(pEntity->RenderableToWorldTransform());
 	if (pEntity && pEntity->entindex() == I::EngineClient->GetLocalPlayer())
 	{
@@ -165,8 +167,6 @@ void CESP::DrawPlayers(CTFPlayer* pLocal)
 							name = "Enemy";
 						else if (pPlayer->m_iTeamNum() == pLocal->m_iTeamNum())
 							name = "Teammate";
-						else
-							name = "Player";
 
 						H::Draw.String(fFontName, middle, y - tOffset, Vars::Menu::Theme::Active.Value, ALIGN_TOP, name);
 					}
@@ -604,8 +604,6 @@ void CESP::DrawBuildings(CTFPlayer* pLocal)
 							name = "Enemy";
 						else if (pOwner->m_iTeamNum() == pLocal->m_iTeamNum())
 							name = "Teammate";
-						else
-							name = "Player";
 
 						H::Draw.String(fFontName, x + w / 2, y - tOffset, { 254, 202, 87, 255 }, ALIGN_TOP, name);
 					}
@@ -835,22 +833,6 @@ void CESP::DrawWorld()
 			int x = 0, y = 0, w = 0, h = 0;
 			if (GetDrawBounds(Projectile, x, y, w, h))
 			{
-				auto pLocal = H::Entities.GetLocal();
-				if (!pLocal)
-					continue;
-
-				auto pProjectile = Projectile->As<CTFGrenadePipebombProjectile>();
-				auto pOwner = pProjectile->m_hThrower().Get();
-				if (!pOwner)
-					continue;
-
-				if (!(Vars::ESP::Draw.Value & 1 << 0) && pOwner->m_iTeamNum() != pLocal->m_iTeamNum())
-					continue;
-				if (!(Vars::ESP::Draw.Value & 1 << 1) && pOwner->m_iTeamNum() == pLocal->m_iTeamNum())
-					continue;
-				if (!(Vars::ESP::Draw.Value & 1 << 2) && pOwner == pLocal)
-					continue;
-
 				const wchar_t* szName;
 				switch (Projectile->GetClassID())
 				{
@@ -859,13 +841,15 @@ void CESP::DrawWorld()
 						szName = L"Rocket"; break;
 					case ETFClassID::CTFGrenadePipebombProjectile:
 					{
-						auto pipe = Projectile->As<CTFGrenadePipebombProjectile>();
-						if (pipe->HasStickyEffects())
-							szName = L"Sticky";
-						else if (pipe->m_iType() == TF_GL_MODE_CANNONBALL)
-							szName = L"Cannonball";
-						else
-							szName = L"Pipe";
+						switch (Projectile->As<CTFGrenadePipebombProjectile>()->m_iType())
+						{
+							case TF_GL_MODE_REMOTE_DETONATE:
+							case TF_GL_MODE_REMOTE_DETONATE_PRACTICE:
+								szName = L"Sticky"; break;
+							case TF_GL_MODE_CANNONBALL:
+								szName = L"Cannonball"; break;
+							default: szName = L"Pipe"; break;
+						}
 						break;
 					}
 					case ETFClassID::CTFProjectile_ThrowableBreadMonster:

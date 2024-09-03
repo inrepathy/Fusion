@@ -1,7 +1,7 @@
 #include "../SDK/SDK.h"
 
 MAKE_HOOK(StudioRender_SetColorModulation, U::Memory.GetVFunc(I::StudioRender, 27), void, __fastcall,
-	void* rcx, const float* pColor)
+	void* ecx, const float* pColor)
 {
 	if (Vars::Visuals::World::Modulations.Value & (1 << 2) && G::DrawingProps && !(Vars::Visuals::UI::CleanScreenshots.Value && I::EngineClient->IsTakingScreenshot()))
 	{
@@ -23,9 +23,9 @@ MAKE_HOOK(StudioRender_SetColorModulation, U::Memory.GetVFunc(I::StudioRender, 2
 				flBlue
 			};
 
-			return CALL_ORIGINAL(rcx, flBlend);
+			return CALL_ORIGINAL(ecx, flBlend);
 		}
 	}
 
-	CALL_ORIGINAL(rcx, pColor);
+	CALL_ORIGINAL(ecx, pColor);
 }
