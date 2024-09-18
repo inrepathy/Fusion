@@ -161,27 +161,46 @@ void CCritHack::CanFireCritical(CTFPlayer* pLocal, CTFWeaponBase* pWeapon)
 {
 	CritBanned = false;
 	DamageTilUnban = 0;
+	trackdmg = 0;
 
 	if (pWeapon->m_iSlot() == SLOT_MELEE)
+	{
 		CritChance = TF_DAMAGE_CRIT_CHANCE_MELEE * pLocal->GetCritMult();
+	}
 	else if (pWeapon->IsStreamingWeapon())
 	{
 		CritChance = TF_DAMAGE_CRIT_CHANCE_RAPID * pLocal->GetCritMult();
 		float flNonCritDuration = (TF_DAMAGE_CRIT_DURATION_RAPID / CritChance) - TF_DAMAGE_CRIT_DURATION_RAPID;
-		CritChance = 1.f / flNonCritDuration;
+		if (flNonCritDuration > 0)
+		{
+			CritChance = 1.f / flNonCritDuration;
+		}
+		else
+		{
+			CritChance = 0; // or handle the error appropriately
+		}
 	}
 	else
+	{
 		CritChance = TF_DAMAGE_CRIT_CHANCE * pLocal->GetCritMult();
+	}
+
 	CritChance = SDK::AttribHookValue(CritChance, "mult_crit_chance", pWeapon) + 0.1f;
 
 	if (!AllDamage || !CritDamage || pWeapon->m_iSlot() == SLOT_MELEE)
 		return;
 
-	const float flNormalizedDamage = (float)CritDamage / TF_DAMAGE_CRIT_MULTIPLIER;
+	const float flNormalizedDamage = static_cast<float>(CritDamage) / TF_DAMAGE_CRIT_MULTIPLIER;
 	const float flObservedCritChance = flNormalizedDamage / (flNormalizedDamage + AllDamage - CritDamage);
-	if (CritBanned = flObservedCritChance > CritChance)
+	if (CritBanned = (flObservedCritChance > CritChance))
+	{
 		DamageTilUnban = flNormalizedDamage / CritChance + CritDamage - flNormalizedDamage - AllDamage;
+	}
+
+	trackdmg = (CritDamage > 0); 
 }
+
+
 
 bool CCritHack::WeaponCanCrit(CTFWeaponBase* pWeapon)
 {
@@ -512,9 +531,18 @@ void CCritHack::Draw(CTFPlayer* pLocal)
 				H::Draw.String(fFont, x, y, { 255, 150, 150, 255 }, align, std::format("Deal {} damage", DamageTilUnban).c_str());
 
 			H::Draw.String(fFont, x, y + fFont.m_nTall + 1, Vars::Menu::Theme::Active.Value, align, std::format("{} / {} potential crits", std::max(Storage[iSlot].AvailableCrits, 0), Storage[iSlot].PotentialCrits).c_str());
+
+
+			H::Draw.String(fFont, x, y + fFont.m_nTall + 14,
+				{ 255, 150, 150, 255 },
+				align,
+				std::format("Desync: {}", AllDamage).c_str());
+			
 		}
 		else
 			H::Draw.String(fFont, x, y, Vars::Menu::Theme::Active.Value, align, "Calculating");
+
+		
 
 		if (Vars::Debug::Info.Value)
 		{
