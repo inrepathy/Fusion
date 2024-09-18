@@ -1,3 +1,5 @@
+// TODO: make a seperate crit thing just for Damage Desync and Crit Damage because it doesnt save on melee for some weird fuck
+
 #include "CritHack.h"
 
 #include "../Aimbot/AutoRocketJump/AutoRocketJump.h"
@@ -532,11 +534,18 @@ void CCritHack::Draw(CTFPlayer* pLocal)
 
 			H::Draw.String(fFont, x, y + fFont.m_nTall + 1, Vars::Menu::Theme::Active.Value, align, std::format("{} / {} potential crits", std::max(Storage[iSlot].AvailableCrits, 0), Storage[iSlot].PotentialCrits).c_str());
 
+			H::Draw.String(fFont, x, y + fFont.m_nTall + 14,
+				{ 150, 255, 150, 255 },
+				align,
+				std::format("Crit Damage: {}", CritDamage).c_str()); // optionally you can make this render just +{} but it looks better tbh this way
 
-			H::Draw.String(fFont, x, y + fFont.m_nTall + 14, // todo https://imgur.com/a/TzySgYf
+			// maybe add pWeapon->m_flCritTokenBucket? i already did it just looks weird so.. maybe if i make it look better?
+
+
+			H::Draw.String(fFont, x, y + fFont.m_nTall + 26,
 				{ 255, 150, 150, 255 },
 				align,
-				std::format("Desync: {}", AllDamage).c_str());
+				std::format("Damage Desync: {}", AllDamage).c_str());
 			
 		}
 		else
@@ -546,7 +555,7 @@ void CCritHack::Draw(CTFPlayer* pLocal)
 
 		if (Vars::Debug::Info.Value)
 		{
-			H::Draw.String(fFont, x, y + fFont.m_nTall * 3, { 255, 255, 255, 255 }, align, std::format("AllDamage: {}, CritDamage: {}", AllDamage, CritDamage).c_str());
+			//H::Draw.String(fFont, x, y + fFont.m_nTall * 3, { 255, 255, 255, 255 }, align, std::format("AllDamage: {}, CritDamage: {}", AllDamage, CritDamage).c_str());
 			H::Draw.String(fFont, x, y + fFont.m_nTall * 4, { 255, 255, 255, 255 }, align, std::format("Bucket: {}", pWeapon->m_flCritTokenBucket()).c_str());
 			H::Draw.String(fFont, x, y + fFont.m_nTall * 5, { 255, 255, 255, 255 }, align, std::format("Damage: {}, Cost: {}", Storage[iSlot].Damage, Storage[iSlot].Cost).c_str());
 			H::Draw.String(fFont, x, y + fFont.m_nTall * 6, { 255, 255, 255, 255 }, align, std::format("Shots: {}, Crits: {}", pWeapon->m_nCritChecks(), pWeapon->m_nCritSeedRequests()).c_str());
