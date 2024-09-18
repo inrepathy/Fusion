@@ -40,6 +40,7 @@ private:
 
 	bool CritBanned = false;
 	int DamageTilUnban = 0;
+	int trackdmg;
 	float CritChance = 0.f;
 	int WishRandomSeed = 0;
 
