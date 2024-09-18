@@ -533,7 +533,7 @@ void CCritHack::Draw(CTFPlayer* pLocal)
 			H::Draw.String(fFont, x, y + fFont.m_nTall + 1, Vars::Menu::Theme::Active.Value, align, std::format("{} / {} potential crits", std::max(Storage[iSlot].AvailableCrits, 0), Storage[iSlot].PotentialCrits).c_str());
 
 
-			H::Draw.String(fFont, x, y + fFont.m_nTall + 14,
+			H::Draw.String(fFont, x, y + fFont.m_nTall + 14, // todo https://imgur.com/a/TzySgYf
 				{ 255, 150, 150, 255 },
 				align,
 				std::format("Desync: {}", AllDamage).c_str());
