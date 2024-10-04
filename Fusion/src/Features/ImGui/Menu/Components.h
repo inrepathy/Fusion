@@ -6,6 +6,11 @@
 #include "../../Visuals/Materials/Materials.h"
 #include <ImGui/imgui_internal.h>
 #include <ImGui/imgui_stdlib.h>
+#include "../../../SDK/SDK.h"
+#include "../Render.h"
+#include <ImGui/TextEditor.h>
+
+
 
 const char* CurrentCondition = "";
 
@@ -313,6 +318,8 @@ namespace ImGui
 		PopStyleVar();
 	}
 
+
+
 	// widgets
 	__inline bool FTabs(std::vector<const char*> titles, int* current, const ImVec2 size, const ImVec2 pos, bool vertical = false, std::vector<const char*> icons = {})
 	{
@@ -472,7 +479,7 @@ namespace ImGui
 			SetMouseCursor(ImGuiMouseCursor_Hand);
 
 		SetCursorPos({ restorePos.x + 4, restorePos.y + 3 });
-		IconImage(*var ? ICON_FA_CIRCLE_CHECK : ICON_FA_CIRCLE, true, *var ? (flags & FToggle_PlainColor ? F::Render.Active.Value : F::Render.Accent.Value) : F::Render.Inactive.Value);
+		IconImage(*var ? ICON_FA_SQUARE_CHECK : ICON_FA_SQUARE, true, *var ? (flags & FToggle_PlainColor ? F::Render.Active.Value : F::Render.Accent.Value) : F::Render.Inactive.Value); // orangutang pussy nigger faggot jew jesus
 
 		SetCursorPos({ restorePos.x + 24, restorePos.y + 5 });
 		if (*var)
@@ -842,7 +849,7 @@ namespace ImGui
 					PopStyleColor();
 
 					SetCursorPos({ originalPos.x + 16, originalPos.y - 33 });
-					IconImage(flagActive ? ICON_FA_CIRCLE_CHECK : ICON_FA_CIRCLE, true, flagActive ? F::Render.Accent.Value : F::Render.Inactive.Value);
+					IconImage(flagActive ? ICON_FA_SQUARE_CHECK : ICON_FA_SQUARE, true, flagActive ? F::Render.Accent.Value : F::Render.Inactive.Value);
 					SetCursorPos(originalPos);
 				}
 				else
@@ -881,7 +888,7 @@ namespace ImGui
 			SetCursorPos({ originalPos.x + 12, originalPos.y + 8 });
 			TextUnformatted(TruncateText(preview.c_str(), sizex - 55).c_str());
 
-			SetCursorPos({ originalPos.x + sizex - 25, originalPos.y - 2 });
+			SetCursorPos({ originalPos.x + sizex - 25, originalPos.y - 2 }); // ICON_FA_SQUARE_CHECK : ICON_FA_SQUARE
 			IconImage(active ? ICON_FA_CARET_UP : ICON_FA_CARET_DOWN, true);
 
 			EndComboPreview();
