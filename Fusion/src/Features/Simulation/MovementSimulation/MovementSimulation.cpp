@@ -357,6 +357,8 @@ bool CMovementSimulation::StrafePrediction(PlayerStorage& playerStorage, const i
 
 	float flAverageYaw = GetAverageYaw(playerStorage.m_pPlayer->entindex(), iSamples);
 
+	flAverageYaw = Math::NormalizeAngle(flAverageYaw);
+
 	playerStorage.m_flAverageYaw = flAverageYaw;
 
 	return true;
