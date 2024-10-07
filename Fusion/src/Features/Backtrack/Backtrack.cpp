@@ -16,7 +16,12 @@ void CBacktrack::Restart()
 // Returns the wish cl_interp
 float CBacktrack::GetLerp()
 {
-	return Vars::Backtrack::Enabled.Value ? std::clamp(static_cast<float>(Vars::Backtrack::Interp.Value), G::Lerp * 1000.f, flMaxUnlag * 1000.f) / 1000.f : G::Lerp;
+	float lerpValue = Vars::Backtrack::Enabled.Value
+		? std::clamp(static_cast<float>(Vars::Backtrack::Interp.Value), G::Lerp * 1000.f, flMaxUnlag * 1000.f) / 1000.f
+		: G::Lerp;
+
+	// could probably make it hit more?
+	return Math::NormalizeAngle(lerpValue);
 }
 
 // Returns the current (custom) backtrack latency
